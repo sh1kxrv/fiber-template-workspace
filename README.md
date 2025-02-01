@@ -5,4 +5,5 @@
 - JWT
 - MongoDB
 - Swagger
+- Taskfile
 - Go Workspace
