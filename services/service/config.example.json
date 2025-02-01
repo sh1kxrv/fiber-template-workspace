@@ -1,0 +1,12 @@
+{
+  "database": {
+    "url": "mongodb://localhost:27017",
+    "name": "db"
+  },
+  "jwt": {
+    "secret": "",
+    "refreshSecret": "",
+    "expire": 7,
+    "refreshExpire": 14
+  }
+}

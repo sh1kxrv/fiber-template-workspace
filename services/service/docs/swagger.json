@@ -1,0 +1,18 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "\u003cService\u003e",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:3001",
+    "paths": {},
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "Bearer Token Authortization",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "Header"
+        }
+    }
+}
