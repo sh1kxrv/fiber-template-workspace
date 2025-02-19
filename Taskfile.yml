@@ -1,4 +1,5 @@
 version: "3"
 
 includes:
-  service: ./tasks/task.service.yml
+  service: ./.tasks/task.service.yml
+  rest_service: ./.tasks/task.rest_service.yml

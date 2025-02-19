@@ -1,0 +1,18 @@
+version: "3"
+
+tasks:
+  run:
+    dir: ./services/rest_service
+    cmds:
+      - go run ./main.go
+  proto:gen:
+    cmds:
+      - protoc-gen-go --go_out=./lib/gen --go_opt=paths=source_relative --go-grpc_out=./lib/gen --go-grpc_opt=paths=source_relative <your proto files>
+  swag:
+    dir: ./services/rest_service
+    generates:
+      - ./internal/docs/swagger.json
+      - ./internal/docs/swagger.yaml
+      - ./internal/docs/docs.go
+    cmds:
+      - swag init --parseDependency --parseInternal --output ./internal/docs

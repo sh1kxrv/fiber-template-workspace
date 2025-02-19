@@ -1,6 +1,8 @@
 go 1.23.5
 
 use (
-	./lib/common
-	./services/service
+	./lib/gen
+	./lib/shared
+	./services/grpc_service
+	./services/rest_service
 )

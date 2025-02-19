@@ -1,0 +1,195 @@
+definitions:
+  auth.AuthDataLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  auth.AuthDataRefresh:
+    properties:
+      refreshToken:
+        type: string
+    required:
+    - refreshToken
+    type: object
+  auth.AuthDataRegister:
+    properties:
+      email:
+        type: string
+      firstName:
+        maxLength: 50
+        minLength: 2
+        type: string
+      lastName:
+        maxLength: 50
+        minLength: 2
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - firstName
+    - lastName
+    - password
+    type: object
+  auth.JwtPair:
+    properties:
+      accessExpiresIn:
+        type: string
+      accessToken:
+        type: string
+      refreshExpiresIn:
+        type: string
+      refreshToken:
+        type: string
+    type: object
+  entity.User:
+    properties:
+      createdAt:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      id:
+        type: string
+      lastName:
+        type: string
+      lastSeen:
+        type: string
+      role:
+        $ref: '#/definitions/enum.Role'
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
+  enum.Role:
+    enum:
+    - USER
+    - ADMIN
+    type: string
+    x-enum-varnames:
+    - User
+    - Admin
+  helper.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+      serverCode:
+        type: integer
+    type: object
+host: 127.0.0.1:3000
+info:
+  contact: {}
+  title: <SHIKARU TEMPLATE>
+  version: "1.0"
+paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Auth data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/auth.AuthDataLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.JwtPair'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Authorization
+      tags:
+      - Authorization
+  /api/v1/auth/refresh:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data Refresh Token
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/auth.AuthDataRefresh'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.JwtPair'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Update Access Token
+      tags:
+      - Authorization
+  /api/v1/auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/auth.AuthDataRegister'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.JwtPair'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      summary: Registration
+      tags:
+      - Authorization
+  /api/v1/user/me:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Data Of My Account
+      tags:
+      - User
+securityDefinitions:
+  ApiKeyAuth:
+    description: Bearer Token authortization
+    in: Header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
