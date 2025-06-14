@@ -1,9 +1,10 @@
-package module
+package controller
 
 import (
-	"rest_service/internal/module/auth"
-	"rest_service/internal/module/user"
+	"rest_service/internal/controller/auth"
+	"rest_service/internal/controller/user"
 	"shared/driver/mongodb"
+	"shared/driver/mongodb/repository"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -23,7 +24,7 @@ func InitRouter(app *fiber.App, db *mongodb.MongoInstance) {
 	v1 := makeBaseGroup(app)
 
 	// Repositories
-	userRepository := user.NewUserRepository(db)
+	userRepository := repository.NewUserRepository(db)
 
 	// Services
 	userService := user.NewUserService(userRepository)

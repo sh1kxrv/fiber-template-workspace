@@ -3,10 +3,11 @@ package auth
 import (
 	"context"
 	"rest_service/internal/config"
-	"rest_service/internal/entity"
-	"rest_service/internal/module/user"
+	"shared/driver/mongodb/entity"
+	"shared/driver/mongodb/repository"
 	"shared/enum"
 	"shared/errors"
+	"shared/transfer/dto"
 	"shared/utils"
 	"shared/utils/crypto"
 	"shared/utils/helper"
@@ -17,7 +18,7 @@ import (
 )
 
 type AuthService struct {
-	userRepo *user.UserRepository
+	userRepo *repository.UserRepository
 }
 
 type JwtPair struct {
@@ -27,7 +28,7 @@ type JwtPair struct {
 	RefreshExpiresIn *string `json:"refreshExpiresIn"`
 }
 
-func NewAuthService(userRepo *user.UserRepository) *AuthService {
+func NewAuthService(userRepo *repository.UserRepository) *AuthService {
 	return &AuthService{
 		userRepo: userRepo,
 	}
@@ -101,7 +102,7 @@ func (h *AuthService) Login(email, password string) (*JwtPair, *helper.ServiceEr
 	return &pair, nil
 }
 
-func (h *AuthService) Register(authData *AuthDataRegister) (*JwtPair, *helper.ServiceError) {
+func (h *AuthService) Register(authData *dto.AuthDataRegister) (*JwtPair, *helper.ServiceError) {
 	ctx, cancel := utils.CreateContextTimeout(15)
 	defer cancel()
 

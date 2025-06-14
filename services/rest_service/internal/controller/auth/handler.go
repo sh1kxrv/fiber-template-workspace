@@ -2,6 +2,7 @@ package auth
 
 import (
 	"shared/errors"
+	"shared/serializer"
 	"shared/utils/helper"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,7 +27,7 @@ func NewAuthHandler(authService *AuthService) *AuthHandler {
 // @Failure 400 {object} helper.ErrorResponse
 // @Router /api/v1/auth/login [post]
 func (h *AuthHandler) Login(c *fiber.Ctx) error {
-	data, err := GetSerializedAuthLoginData(c)
+	data, err := serializer.GetSerializedAuthLoginData(c)
 
 	if err != nil {
 		return helper.SendError(c, err, errors.ValidationError)
@@ -45,7 +46,7 @@ func (h *AuthHandler) Login(c *fiber.Ctx) error {
 // @Failure 400 {object} helper.ErrorResponse
 // @Router /api/v1/auth/register [post]
 func (h *AuthHandler) Register(c *fiber.Ctx) error {
-	data, err := GetSerializedAuthRegisterData(c)
+	data, err := serializer.GetSerializedAuthRegisterData(c)
 
 	if err != nil {
 		return helper.SendError(c, err, errors.ValidationError)
@@ -64,7 +65,7 @@ func (h *AuthHandler) Register(c *fiber.Ctx) error {
 // @Failure 400 {object} helper.ErrorResponse
 // @Router /api/v1/auth/refresh [post]
 func (h *AuthHandler) Refresh(c *fiber.Ctx) error {
-	v, err := GetSerializedAuthRefreshData(c)
+	v, err := serializer.GetSerializedAuthRefreshData(c)
 
 	if err != nil {
 		return helper.SendError(c, err, errors.ValidationError)

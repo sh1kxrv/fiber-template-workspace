@@ -4,7 +4,6 @@ import (
 	"context"
 	"os"
 	"os/signal"
-	"shared/cache/memcache"
 	"shared/driver/mongodb"
 	"syscall"
 
@@ -13,11 +12,12 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/swagger"
 
-	// docs
 	"rest_service/internal/boot"
 	"rest_service/internal/config"
+	"rest_service/internal/controller"
+
+	// docs
 	_ "rest_service/internal/docs"
-	"rest_service/internal/module"
 
 	"github.com/sirupsen/logrus"
 )
@@ -31,7 +31,7 @@ import (
 // @description Bearer Token authortization
 // @BasePath /
 func main() {
-	memoryCacheContext, cancel := context.WithCancel(context.Background())
+	_, cancel := context.WithCancel(context.Background())
 
 	if err := boot.InitViper(); err != nil {
 		logrus.Fatalf("Failed to initialize config: %s", err.Error())
@@ -48,20 +48,17 @@ func main() {
 		logrus.Fatalf("Failed to connect to mongodb: %s", err.Error())
 	}
 
-	memoryCache := boot.InitMemoryCache(memoryCacheContext)
-
 	var app = fiber.New(fiber.Config{
 		ServerHeader: "<SHIKARU>",
 		JSONEncoder:  json.Marshal,
 		JSONDecoder:  json.Unmarshal,
 	})
 
-	app.Use(memcache.MemoryCacheMiddleware(memoryCache))
 	app.Use(cors.New())
 
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
-	module.InitRouter(app, db)
+	controller.InitRouter(app, db)
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)

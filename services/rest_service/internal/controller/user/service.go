@@ -1,7 +1,8 @@
 package user
 
 import (
-	"rest_service/internal/entity"
+	"shared/driver/mongodb/entity"
+	"shared/driver/mongodb/repository"
 	"shared/errors"
 	"shared/utils"
 	"shared/utils/helper"
@@ -10,10 +11,10 @@ import (
 )
 
 type UserService struct {
-	userRepo *UserRepository
+	userRepo *repository.UserRepository
 }
 
-func NewUserService(userRepo *UserRepository) *UserService {
+func NewUserService(userRepo *repository.UserRepository) *UserService {
 	return &UserService{
 		userRepo: userRepo,
 	}

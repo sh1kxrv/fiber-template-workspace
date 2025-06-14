@@ -1,9 +1,9 @@
-package user
+package repository
 
 import (
 	"context"
-	"rest_service/internal/entity"
 	"shared/driver/mongodb"
+	"shared/driver/mongodb/entity"
 	"shared/repository"
 	"time"
 

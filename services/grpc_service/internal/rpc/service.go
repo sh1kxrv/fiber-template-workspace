@@ -1,13 +1,10 @@
 package rpc
 
-import "shared/cache/memcache"
-
 type authService struct {
-	cache *memcache.MemoryCache
 }
 
-func NewAuthService(cache *memcache.MemoryCache) *authService {
-	return &authService{cache: cache}
+func NewAuthService() *authService {
+	return &authService{}
 }
 
 func (s *authService) SetToken(token string, tgId string) (bool, error) {

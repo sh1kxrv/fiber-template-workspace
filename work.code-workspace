@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"name": "+ROOT",
+			"path": "."
+		},
+		{
+			"name": "Service : REST",
+			"path": "./services/rest_service"
+		},
+		{
+			"name": "Service : GRPC",
+			"path": "./services/grpc_service"
+		},
+		{
+			"name": "Library : Shared",
+			"path": "./lib/shared"
+		},
+		{
+			"name": "Library : Gen",
+			"path": "./lib/gen"
+		},
+		{
+			"name": "Library : Proto",
+			"path": "./lib/proto"
+		}
+	],
+	"settings": {}
+}

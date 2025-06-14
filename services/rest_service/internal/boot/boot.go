@@ -3,16 +3,11 @@ package boot
 import (
 	"context"
 	"os"
-	"shared/cache/memcache"
 	"shared/driver/mongodb"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
-
-func InitMemoryCache(ctx context.Context) *memcache.MemoryCache {
-	return memcache.NewMemoryCache(ctx)
-}
 
 func InitViper() error {
 	viper.SetConfigName("config")
