@@ -4,7 +4,7 @@ import (
 	"context"
 	"shared/driver/mongodb"
 	"shared/driver/mongodb/entity"
-	"shared/repository"
+	"shared/utils/repository"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -27,12 +27,7 @@ func NewUserRepository(db *mongodb.MongoInstance) *UserRepository {
 }
 
 func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*entity.User, error) {
-	var user entity.User
-	err := r.Collection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
-	if err != nil {
-		return nil, err
-	}
-	return &user, nil
+	return r.GetEntityBy(ctx, bson.M{"email": email})
 }
 
 func (r *UserRepository) UpdateUser(ctx context.Context, user *entity.User) error {
