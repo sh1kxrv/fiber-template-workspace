@@ -7,3 +7,4 @@
 - Swagger
 - Taskfile
 - Go Workspace
+- Cache Ristretto
